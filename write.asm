@@ -72,40 +72,8 @@ write_cdr:
 
     global print
 print:
-    push rax
-    push rdi
-    push rsi
-    push rdx
-    push rcx
-
     call write
     putchar 0x0a
-
-    pop rcx
-    pop rdx
-    pop rsi
-    pop rdi
-    pop rax
-    ret
-
-    global print_rax
-print_rax:
-    push rax
-    push rdi
-    push rsi
-    push rdx
-    push rcx
-
-    mov rdi,rax
-    call write
-    putchar 0x0a
-
-    pop rcx
-    pop rdx
-    pop rsi
-    pop rdi
-    pop rax
-    ret
 
     section .bss
     align 16

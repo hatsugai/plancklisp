@@ -4,10 +4,8 @@
     BITS 64
 
     extern error
-    extern print_rax
     
    	global eval
-
 ;;; expr:   rdi
 ;;; env:    rsi
 ;;; DESTROY: rdx
