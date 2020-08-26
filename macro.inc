@@ -4,7 +4,7 @@
 
     NIL       equ chr(0)
     TRUE      equ chr('T')
-    CLOSURE   equ chr(1)
+    CLOSURE   equ chr('^')
     OP_EQ     equ chr('=')
     OP_QUOTE  equ chr(39)       ; single-quote
     OP_LAMBDA equ chr('#')
@@ -14,6 +14,8 @@
     OP_CAR    equ chr('<')
     OP_CDR    equ chr('>')
     OP_SET    equ chr('!')
+    OP_READ   equ chr('$')
+    OP_WRITE  equ chr('%')
 
 %define car(x)      [x]
 %define cdr(x)      [x + WORD_SIZE]

@@ -4,6 +4,8 @@
     BITS 64
 
     extern error
+    extern read
+    extern print
     
    	global eval
 ;;; expr:   rdi
@@ -40,6 +42,14 @@ eval:
     jz .eval_car
     cmp dl,OP_CDR
     jz .eval_cdr
+    cmp dl,OP_EQ
+    jz .eval_eq
+    cmp dl,OP_SET
+    jz .eval_set
+    cmp dl,OP_READ
+    jz .eval_read
+    cmp dl,OP_WRITE
+    jz .eval_write
     jmp apply
 
 .eval_quote:
@@ -69,6 +79,22 @@ eval:
     mov rdi,cdr(rdi)
     mov rdi,car(rdi)
     jmp eval
+
+.eval_set:
+    ;; rdi: (! var expr)
+    ;; rsi: env
+    mov rdi,cdr(rdi)            ; (var expr)
+    mov rax,car(rdi)            ; var
+    push rax                    ; save var
+    mov rdi,cdr(rdi)            ; (expr)
+    mov rdi,car(rdi)            ; expr
+    call eval
+    pop rdi                     ; var
+    push rax                    ; value
+    call assq
+    pop rdi                     ; valu
+    mov cdr(rax),rdi
+    ret
     
 .eval_atom:
     mov rdi,cdr(rdi)
@@ -109,6 +135,42 @@ eval:
     mov rdi,car(rdi)
     call eval
     mov rax,cdr(rax)
+    ret
+
+.eval_eq:
+    mov rdi,cdr(rdi)
+    push rdi                    ; save cdr(expr)
+    mov rdi,car(rdi)
+    call eval
+    pop rdi
+    push rax
+    mov rdi,cdr(rdi)
+    mov rdi,car(rdi)
+    call eval
+    pop rdi
+    cmp rdi,rax
+    je .true
+    mov eax,NIL
+    ret
+.true:
+    mov eax,TRUE
+    ret
+
+.eval_read:
+    call read
+    ret
+
+    ;; rdi = (write expr)
+.eval_write:
+    push rsi
+    mov rdi,cdr(rdi)            ; (expr)
+    mov rdi,car(rdi)            ; expr
+    call eval
+    push rax
+    mov rdi,rax
+    call print
+    pop rax
+    pop rsi
     ret
 
     global evlis
