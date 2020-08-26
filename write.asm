@@ -74,6 +74,7 @@ write_cdr:
 print:
     call write
     putchar 0x0a
+    ret
 
     section .bss
     align 16
