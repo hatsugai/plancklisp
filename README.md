@@ -79,5 +79,6 @@ Lisp interpreter in x86 assembler language for Linux
              ((< (f f))
               ((> (f f)) (> x))
               (+ (< x) ()) )))))))
- => (' (a b c d e f)))
+ (' (a b c d e f)))
+=> (f e d c b a)
 ```
