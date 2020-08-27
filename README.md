@@ -65,6 +65,21 @@ Lisp interpreter in x86 assembler language for Linux
 ```
 
 ```
+((((# (f)
+     ((# (x) (f (# (y) ((x x) y))))
+      (# (x) (f (# (y) ((x x) y))))))
+   (# (f)
+     (# (x)
+       (# (y)
+         (? (= x ())
+             y
+             (+ (< x) ((f (> x)) y)))))))
+  (' (a b c)))
+ (' (d e)))
+=> (a b c d e)
+```
+
+```
 ((>
   ((# (f) (f f))
    (# (f)
@@ -82,3 +97,24 @@ Lisp interpreter in x86 assembler language for Linux
  (' (a b c d e f)))
 => (f e d c b a)
 ```
+
+```
+((>
+  ((# (f) (f f))
+   (# (f)
+      (+
+       (# (x y)
+          (? (= x ())
+             y
+             ((< (f f))
+			  ((> (f f)) (> ((> (f f)) x)))
+			  (+ (< ((> (f f)) x)) y))))
+       (# (x)
+          (? (= x ())
+             ()
+             ((< (f f))
+              ((> (f f)) (> x))
+              (+ (< x) ()) )))))))
+ (' (a b c d e)))
+ => (e d c b a)
+ ```
