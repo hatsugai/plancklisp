@@ -107,8 +107,8 @@ Lisp interpreter in x86 assembler language for Linux
           (? (= x ())
              y
              ((< (f f))
-			  ((> (f f)) (> ((> (f f)) x)))
-			  (+ (< ((> (f f)) x)) y))))
+              ((> (f f)) (> ((> (f f)) x)))
+              (+ (< ((> (f f)) x)) y))))
        (# (x)
           (? (= x ())
              ()
